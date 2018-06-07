@@ -19,7 +19,7 @@ import (
 // retrieve the Kubernetes cluster client from outside of the cluster
 func getKubernetesClient() kubernetes.Interface {
 	// construct the path to resolve to `~/.kube/config`
-	kubeConfigPath := os.Getenv("HOME") + "/.kube/config"
+	kubeConfigPath := ""  // os.Getenv("HOME") + "/.kube/config"
 
 	// create the config from the path
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
