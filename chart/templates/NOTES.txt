@@ -1,0 +1,12 @@
+
+Congrats, sidecar-controller is now running!
+
+If you specify the `nrmitchi.com/sidecars` annotation on a pod, with a comma-separated list of container names, the pod
+will be automatically shut down if the specified sidecar containers are the only ones still running.
+
+Example:
+
+```
+annotations:
+  nrmitchi.com/sidecars: "veneur,log-forwarder,cloudsql-proxy"
+```
