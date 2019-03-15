@@ -68,7 +68,7 @@ func sendShutdownSignal(pod *core_v1.Pod, containers set.Set) {
 
 // ObjectCreated is called when an object is created
 func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
-	log.Info("SidecarShutdownHandler.ObjectCreated")
+	log.Debug("SidecarShutdownHandler.ObjectCreated")
 	// assert the type to a Pod object to pull out relevant data
 	pod := obj.(*core_v1.Pod)
 
@@ -78,8 +78,6 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 		log.Infof("    ResourceTrackable: true")
 		log.Infof("    Sidecars: %s", sidecarsString)
 	} else {
-		log.Infof("    ResourceTrackable: false")
-
 		return
 	}
 

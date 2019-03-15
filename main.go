@@ -83,15 +83,15 @@ func main() {
 			if err == nil {
 				// add the key to the queue for the handler to get
 				queue.Add(key)
-				log.Infof("  Queue len: %d", queue.Len())
+				log.Debugf("  Queue len: %d", queue.Len())
 			}
 		},
 		UpdateFunc: func(oldObj, newObj interface{}) {
 			key, err := cache.MetaNamespaceKeyFunc(newObj)
-			log.Infof("Update pod: %s", key)
+			log.Debugf("Update pod: %s", key)
 			if err == nil {
 				queue.Add(key)
-				log.Infof("  Queue len: %d", queue.Len())
+				log.Debugf("  Queue len: %d", queue.Len())
 			}
 		},
 		DeleteFunc: func(obj interface{}) {
