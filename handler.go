@@ -35,7 +35,7 @@ func sendShutdownSignal(pod *core_v1.Pod, containers set.Set) {
 	// Multiple arguments must be provided as separate "command" parameters
 	// The first one is added automatically.
 	// Todo: Update requestFromConfig to handle this better
-	command := "bash&command=-c&command=kill+-s+TERM+1"  // "kill -s TERM 1"
+	command := "ash&command=-c&command=kill+-s+TERM+1" // "kill -s TERM 1"
 	//command = "ls"
 	// creates the connection
 	config, err := clientcmd.BuildConfigFromFlags("", "")

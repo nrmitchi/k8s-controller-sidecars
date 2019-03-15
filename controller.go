@@ -44,7 +44,7 @@ func (c *Controller) Run(stopCh <-chan struct{}) {
 	c.logger.Info("Controller.Run: cache sync complete")
 
 	// run the runWorker method every second with a stop channel
-	wait.Until(c.runWorker, time.Second, stopCh)
+	wait.Until(c.runWorker, 10*time.Second, stopCh)
 }
 
 // HasSynced allows us to satisfy the Controller interface
