@@ -1,8 +1,6 @@
-
 // The majority of this file was borrowed from https://github.com/rmohr/kubernetes-custom-exec
 
 package main
-
 
 import (
 	"bytes"
@@ -104,6 +102,7 @@ func requestFromConfig(config *rest.Config, pod string, container string, namesp
 	req := &http.Request{
 		Method: http.MethodGet,
 		URL:    u,
+		Header: map[string][]string{},
 	}
 
 	return req, nil

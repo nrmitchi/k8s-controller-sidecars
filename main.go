@@ -19,7 +19,7 @@ import (
 // retrieve the Kubernetes cluster client from outside of the cluster
 func getKubernetesClient() kubernetes.Interface {
 	// construct the path to resolve to `~/.kube/config`
-	kubeConfigPath := ""  // os.Getenv("HOME") + "/.kube/config"
+	kubeConfigPath := "" // os.Getenv("HOME") + "/.kube/config"
 
 	// create the config from the path
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
@@ -42,7 +42,7 @@ func main() {
 	// get the Kubernetes client for connectivity
 	client := getKubernetesClient()
 
-	namespace := meta_v1.NamespaceDefault
+	namespace := meta_v1.NamespaceAll
 
 	// create the informer so that we can not only list resources
 	// but also watch them for all pods in the default namespace
