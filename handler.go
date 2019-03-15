@@ -72,7 +72,7 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 	// assert the type to a Pod object to pull out relevant data
 	pod := obj.(*core_v1.Pod)
 
-	sidecarsString, exists := pod.Annotations["nrmitchi.com/sidecars"]
+	sidecarsString, exists := pod.Annotations["lemonade.com/sidecars"]
 
 	if exists {
 		log.Infof("    ResourceTrackable: true")
