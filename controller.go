@@ -55,22 +55,22 @@ func (c *Controller) HasSynced() bool {
 
 // runWorker executes the loop to process new items added to the queue
 func (c *Controller) runWorker() {
-	log.Info("Controller.runWorker: starting")
+	log.Debug("Controller.runWorker: starting")
 
 	// invoke processNextItem to fetch and consume the next change
 	// to a watched or listed resource
 	for c.processNextItem() {
-		log.Info("Controller.runWorker: processing next item")
+		log.Debug("Controller.runWorker: processing next item")
 	}
 
-	log.Info("Controller.runWorker: completed")
+	log.Debug("Controller.runWorker: completed")
 }
 
 // processNextItem retrieves each queued item and takes the
 // necessary handler action based off of if the item was
 // created or deleted
 func (c *Controller) processNextItem() bool {
-	log.Info("Controller.processNextItem: start")
+	log.Debug("Controller.processNextItem: start")
 
 	// fetch the next item (blocking) from the queue to process or
 	// if a shutdown is requested then return out of this to stop
@@ -118,11 +118,11 @@ func (c *Controller) processNextItem() bool {
 	// after both instances, we want to forget the key from the queue, as this indicates
 	// a code path of successful queue key processing
 	if !exists {
-		c.logger.Infof("Controller.processNextItem: object deleted detected: %s", keyRaw)
+		c.logger.Debugf("Controller.processNextItem: object deleted detected: %s", keyRaw)
 		c.handler.ObjectDeleted(item)
 		c.queue.Forget(key)
 	} else {
-		c.logger.Infof("Controller.processNextItem: object created detected: %s", keyRaw)
+		c.logger.Debugf("Controller.processNextItem: object created detected: %s", keyRaw)
 		c.handler.ObjectCreated(item)
 		c.queue.Forget(key)
 	}
