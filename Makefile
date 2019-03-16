@@ -1,8 +1,8 @@
-IMAGE=lemonadehq/controller-sidecars
+IMAGE=lemonadehq/controller-sidecars:dev
 
 build:
-	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
-	docker build -t ${IMAGE} .
+	CGO_ENABLED=0 go build -a -installsuffix cgo -o main .
 
-push:
+docker:
+	docker build -t ${IMAGE} --build-arg BRANCH=dev -f dev/Dockerfile .
 	docker push ${IMAGE}
