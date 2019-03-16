@@ -35,8 +35,7 @@ func sendShutdownSignal(pod *core_v1.Pod, containers set.Set) {
 	// Multiple arguments must be provided as separate "command" parameters
 	// The first one is added automatically.
 	// Todo: Update requestFromConfig to handle this better
-	command := "ash&command=-c&command=kill+-s+TERM+1" // "kill -s TERM 1"
-	//command = "ls"
+	command := "sh&command=-c&command=kill+-s+TERM+1" // "kill -s TERM 1"
 	// creates the connection
 	config, err := clientcmd.BuildConfigFromFlags("", "")
 	if err != nil {
@@ -125,12 +124,12 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 
 // ObjectDeleted is called when an object is deleted
 func (t *SidecarShutdownHandler) ObjectDeleted(obj interface{}) {
-	log.Info("SidecarShutdownHandler.ObjectDeleted")
+	log.Debug("SidecarShutdownHandler.ObjectDeleted")
 }
 
 // ObjectUpdated is called when an object is updated.
 // Note that the controller in this repo will never call this function properly.
 // It uses only ObjectCreated
 func (t *SidecarShutdownHandler) ObjectUpdated(objOld, objNew interface{}) {
-	log.Info("SidecarShutdownHandler.ObjectUpdated")
+	log.Debug("SidecarShutdownHandler.ObjectUpdated")
 }
