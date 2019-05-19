@@ -33,7 +33,7 @@ func getKubernetesClient() kubernetes.Interface {
 		log.Fatalf("getClusterConfig: %v", err)
 	}
 
-	log.Info("Successfully constructed k8s client")
+	log.Debugf("Successfully constructed k8s client")
 	return client
 }
 
@@ -79,7 +79,7 @@ func main() {
 			// convert the resource object into a key (in this case
 			// we are just doing it in the format of 'namespace/name')
 			key, err := cache.MetaNamespaceKeyFunc(obj)
-			log.Infof("Add pod: %s", key)
+			log.Debugf("Add pod: %s", key)
 			if err == nil {
 				// add the key to the queue for the handler to get
 				queue.Add(key)
@@ -104,7 +104,7 @@ func main() {
 			log.Infof("Delete pod: %s", key)
 			if err == nil {
 				queue.Add(key)
-				log.Infof("  Queue len: %d", queue.Len())
+				log.Debugf("  Queue len: %d", queue.Len())
 			}
 		},
 	})
