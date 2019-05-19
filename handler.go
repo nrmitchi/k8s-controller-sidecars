@@ -2,6 +2,9 @@ package main
 
 import (
 	"strings"
+	"time"
+
+	"github.com/avast/retry-go"
 
 	log "github.com/Sirupsen/logrus"
 	core_v1 "k8s.io/api/core/v1"
@@ -55,14 +58,21 @@ func sendShutdownSignal(pod *core_v1.Pod, containers set.Set) {
 			log.Infoln(err)
 		}
 
-		// Send the request and let the callback do its work
-		_, err = wrappedRoundTripper.RoundTrip(req)
-
+		err = retry.Do(
+			func() error {
+				// Send the request and let the callback do its work
+				_, err = wrappedRoundTripper.RoundTrip(req)
+				if err != nil {
+					return err
+				}
+				return nil
+			},
+			retry.Delay(5*time.Second),
+		)
 		if err != nil {
-			log.Infoln(err)
+			log.Errorln(err)
 		}
 	}
-
 }
 
 // ObjectCreated is called when an object is created
