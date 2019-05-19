@@ -74,8 +74,8 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 	sidecarsString, exists := pod.Annotations["lemonade.com/sidecars"]
 
 	if exists {
-		log.Infof("    ResourceTrackable: true")
-		log.Infof("    Sidecars: %s", sidecarsString)
+		log.Debugf("    ResourceTrackable: true")
+		log.Infof("    Sidecars: %s, node: %s, phase: %s", sidecarsString, pod.Spec.NodeName, pod.Status.Phase)
 	} else {
 		return
 	}
@@ -85,10 +85,6 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 	for _, s := range strings.Split(sidecarsString, ",") {
 		sidecars.Add(s)
 	}
-
-	log.Infof("    ResourceVersion: %s", pod.ObjectMeta.ResourceVersion)
-	log.Infof("    NodeName: %s", pod.Spec.NodeName)
-	log.Infof("    Phase: %s", pod.Status.Phase)
 
 	allContainers := set.NewSet()
 	runningContainers := set.NewSet()
@@ -107,15 +103,15 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 		}
 	}
 
-	log.Infof("    all       : %s", allContainers)
-	log.Infof("    running   : %s", runningContainers)
-	log.Infof("    completed : %s", completedContainers)
-	log.Infof("    sidecars  : %s", sidecars)
+	log.Debugf("    all       : %s", allContainers)
+	log.Debugf("    running   : %s", runningContainers)
+	log.Debugf("    completed : %s", completedContainers)
+	log.Debugf("    sidecars  : %s", sidecars)
 
 	// If we have accounted for all of the containers, and the sidecar containers are the only
 	// ones still running, issue them each a shutdown command
 	if runningContainers.Union(completedContainers).Equal(allContainers) {
-		log.Infof("  We have all the containers")
+		log.Debugf("  We have all the containers")
 		if runningContainers.Equal(sidecars) {
 			log.Infof("    Sending shutdown signal to containers: %s, %s", pod.Name, sidecars)
 			sendShutdownSignal(pod, sidecars)
