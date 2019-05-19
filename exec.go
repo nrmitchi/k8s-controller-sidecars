@@ -47,6 +47,9 @@ func WebsocketCallback(ws *websocket.Conn, resp *http.Response, err error) error
 			if err == io.EOF {
 				return nil
 			}
+			if websocket.IsCloseError(err, 1000) {
+				return nil
+			}
 			return err
 		}
 		txt = txt + string(body)
