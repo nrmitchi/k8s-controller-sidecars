@@ -67,7 +67,8 @@ func sendShutdownSignal(pod *core_v1.Pod, containers set.Set) {
 				}
 				return nil
 			},
-			retry.Delay(5*time.Second),
+			retry.Delay(3*time.Second),
+			retry.Attempts(5),
 		)
 		if err != nil {
 			log.Errorln(err)
