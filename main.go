@@ -42,7 +42,7 @@ func main() {
 	// get the Kubernetes client for connectivity
 	client := getKubernetesClient()
 
-	namespace := meta_v1.NamespaceDefault
+	namespace := meta_v1.NamespaceAll
 
 	// create the informer so that we can not only list resources
 	// but also watch them for all pods in the default namespace
