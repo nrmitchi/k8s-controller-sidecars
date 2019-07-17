@@ -1,0 +1,7 @@
+image:
+  repository: "registry.riskxint.com/library/controller-sidecars"
+  tag: "1.0.0"
+  pullPolicy: "Always"
+
+cpu: 200
+memory: 128

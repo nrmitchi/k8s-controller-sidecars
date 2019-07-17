@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: sidecar-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: sidecar-controller
+  template:
+    metadata:
+      labels:
+        name: sidecar-controller
+    spec:
+      serviceAccountName: sidecar-job-controller
+      containers:
+        - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: sidecar-controller
+          resources:
+            limits:
+              cpu: {{ .Values.cpu }}m
+              memory: {{ .Values.memory }}Mi
+            requests:
+              cpu: {{ .Values.cpu }}m
+              memory: {{ .Values.memory }}Mi
