@@ -103,7 +103,8 @@ func (t *SidecarShutdownHandler) ObjectCreated(obj interface{}) {
 		if containerStatus.Ready {
 			runningContainers.Add(containerStatus.Name)
 		} else {
-			if containerStatus.State.Terminated != nil && containerStatus.State.Terminated.Reason == "Completed" {
+			terminated := containerStatus.State.Terminated
+			if terminated != nil && (terminated.Reason == "Completed" || terminated.Reason == "Error") {
 				completedContainers.Add(containerStatus.Name)
 			}
 		}

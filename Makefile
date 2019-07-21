@@ -1,4 +1,4 @@
-export TAG ?= 1.0.0
+export TAG ?= 2.0.0
 IMAGE=registry.riskxint.com/library/controller-sidecars
 
 build:
