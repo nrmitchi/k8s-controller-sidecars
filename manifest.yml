@@ -48,7 +48,7 @@ spec:
     spec:
       serviceAccountName: sidecar-job-controller
       containers:
-        - image: lemonadehq/controller-sidecars:latest
+        - image: nrmitchi/k8s-controller-sidecars:latest
           imagePullPolicy: Always
           name: sidecar-controller
           resources:
